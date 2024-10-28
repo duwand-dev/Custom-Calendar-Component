@@ -11,3 +11,9 @@ export interface Note {
   date: Date;
   note: string;
 }
+
+export enum ViewTypes {
+  DailyView,
+  MonthlyView,
+  YearlyView,
+}

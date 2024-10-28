@@ -9,18 +9,22 @@ const fullDayNames = ["Sunday", "Monday", "Tuesday", "Wendesday", "Thursday", "F
 const monthsNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const MILLSPERDAY = 86400000;
 
-function DailyView() {
-  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+function DailyView(props: { currentDate: Date, onSelect: (date: number) => void }) {
+  const [currentDate, setCurrentDate] = useState<Date>(props.currentDate);
   const [holidays, setHolidays] = useState<HolidaysTypes.Holiday[]>([]);
   const [dates, setDates] = useState<Array<MyDate>>([]);
   const [notes, setNotes] = useState<Array<Note>>([]);
 
   useEffect(() => {
     const hd = new Holidays("US");
-    const currentYear = new Date().getFullYear();
+    const currentYear = currentDate.getFullYear();
     const usHolidays = hd.getHolidays(currentYear);
     setHolidays(usHolidays);
   }, []);
+
+  useEffect(() => {
+    setCurrentDate(props.currentDate);
+  }, [props]);
 
   useEffect(() => {
     const temp: Array<MyDate> = [];
@@ -28,9 +32,9 @@ function DailyView() {
     const year = currentDate.getFullYear(),
       month = currentDate.getMonth(),
       date = currentDate.getDate();
+    if (isSpecial(year)) datesForMonth[1] = 29;
     const startDay = new Date(year, month, 1).getDay(),
       count = 7 - ((datesForMonth[month] + startDay) % 7);
-    if (isSpecial(year)) datesForMonth[1] = 29;
 
     // Previous month
     for (let i = 0; i < startDay; i++) {
@@ -53,7 +57,7 @@ function DailyView() {
         isActive: true,
         isHoliday: false,
         hasNote: false,
-        isCurrentDate: i == date - 1 ? true : false,
+        isCurrentDate: i === date - 1 ? true : false,
         dateObj: new Date(year, month, i + 1),
       });
     }
@@ -74,10 +78,10 @@ function DailyView() {
     }
 
     setDates(temp);
-  }, [currentDate.getFullYear(), currentDate.getMonth()]);
+  }, [currentDate]);
 
   const isSpecial = (year: number) => {
-    return year % 400 == 0 || (year % 100 != 0 && year % 4 == 0);
+    return year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0);
   };
 
   const toMyFormat = (date: Date) => {
