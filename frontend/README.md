@@ -1,46 +1,45 @@
-# Getting Started with Create React App
+# Simple Scheduling Calendar Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## What is the use of this project
 
-## Available Scripts
+This Project is a React Calendar App which allows users to do following
 
-In the project directory, you can run:
+1. See a calendar that shows US holidays and sundays highlighted
+2. Add notes to specific days
+3. Delete existing notes or update notes
+4. Send notes to server and save them
+5. Load saved notes from the server
 
-### `npm start`
+## Techstacks
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+`React`, `Tailwind CSS`, `Typescript`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Install Node JS
 
-### `npm test`
+Refer to https://nodejs.org/en/ to install nodejs
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Cloning and Running the Application in local
 
-### `npm run build`
+`Clone the project into local`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+You can clone this public project from this URL: git@github.com:duwand-dev/Custom-Calendar-Component.git
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Install all the npm packages. Go into the project folder and type the following command to install all npm packages
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm install
+```
 
-### `npm run eject`
+In order to run the application Type the following command
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```bash
+npm start
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The Application Runs on **localhost:3000**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Challenge
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+**Displaying daily view with holidays and sundays highlighted** :
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+This was the most challenging thing there are special years called leap years with 29 days in February and getting and displaying holidays for US was complicated. I made a function that checks if a year is leap year and get list of holidays using React library called date-holidays.

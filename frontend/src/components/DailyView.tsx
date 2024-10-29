@@ -101,7 +101,8 @@ function DailyView(props: { currentDate: Date, onSelect: (date: number) => void 
   };
 
   const createNote = (date: Date, index: number) => {
-    const noteString = window.prompt("Leave your note for this day");
+    const ind1 = notes.findIndex((note) => note.date.toString() === date.toString());
+    const noteString = window.prompt("Leave your note for this day", ind1 < 0 ? "" : notes[ind1].note);
     const note = noteString === null ? "" : noteString;
 
     let tempNotes = new Array<Note>(...notes);
