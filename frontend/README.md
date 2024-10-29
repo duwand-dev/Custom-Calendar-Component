@@ -1,4 +1,4 @@
-# Simple Scheduling Calendar Project
+# Simple Calendar Project
 
 ## What is the use of this project
 
