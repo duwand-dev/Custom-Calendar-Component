@@ -12,7 +12,7 @@ function YearlyView(props: { currentYear: number, onSelect: (year: number) => vo
 
   return (
     <div className="w-[350px] flex flex-wrap">
-      {/* months */}
+      {/* years */}
       {years.map((val, index) => {
         return (
           <div
