@@ -6,7 +6,6 @@ import YearlyView from "./YearlyView";
 
 const fullDayNames = ["Sunday", "Monday", "Tuesday", "Wendesday", "Thursday", "Friday", "Saturday"];
 const monthsNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const MILLSPERDAY = 86400000;
 
 function App() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());

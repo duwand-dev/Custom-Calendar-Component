@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import Cell from "./Cell";
-
 function YearlyView(props: { currentYear: number, onSelect: (year: number) => void }) {
   const [years, setYears] = useState<Array<number>>([]);
 

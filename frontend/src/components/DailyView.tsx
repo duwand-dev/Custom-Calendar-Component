@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Holidays, { HolidaysTypes } from "date-holidays";
+import axios, { AxiosResponse } from 'axios';
 
 import Cell from "./Cell";
 import { MyDate, Note } from "../types/types";
+import { serverURL } from "../config/config";
 
 const days = ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"];
 const fullDayNames = ["Sunday", "Monday", "Tuesday", "Wendesday", "Thursday", "Friday", "Saturday"];
@@ -20,6 +22,10 @@ function DailyView(props: { currentDate: Date, onSelect: (date: number) => void 
     const currentYear = currentDate.getFullYear();
     const usHolidays = hd.getHolidays(currentYear);
     setHolidays(usHolidays);
+    axios.post(`${serverURL}/getevents`).then((res: AxiosResponse) => {
+      const notes = res.data.data.events;
+      setNotes(notes.map((note: { date: string, note: string }) => { return { date: new Date(note.date), note: note.note } }));
+    }).catch(err => console.error(err))
   }, []);
 
   useEffect(() => {
@@ -112,6 +118,12 @@ function DailyView(props: { currentDate: Date, onSelect: (date: number) => void 
     }
 
     setNotes(tempNotes);
+
+    try {
+      axios.post(`${serverURL}/addevent`, { event: tempNotes })
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 const monthsNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function MonthlyView(props: { onSelect: (month: number) => void }) {
-
   return (
     <div className="w-[350px] flex flex-wrap">
       {/* months */}
