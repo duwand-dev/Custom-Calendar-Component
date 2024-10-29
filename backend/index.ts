@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { ArticleRouter } from "./routers/event.router";
+import { EventRouter } from "./routers/event.router";
 import mongoose from "mongoose";
 
 dotenv.config();
@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(cors());
 
-app.use(ArticleRouter);
+app.use(EventRouter);
 
 const mongoURL = process.env.mongoURL || "mongodb://localhost:27017/event";
 mongoose.connect(mongoURL).then(

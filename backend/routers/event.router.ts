@@ -27,4 +27,4 @@ router.post("/getevents", async (req, res) => {
   }
 });
 
-export const ArticleRouter = router;
+export const EventRouter = router;
