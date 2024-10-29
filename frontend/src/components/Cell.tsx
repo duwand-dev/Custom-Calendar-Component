@@ -1,7 +1,9 @@
-import React from "react";
+import { FC } from "react";
+import classNames from "classnames";
+
 import Badge from "./Badge";
 
-export default (props: {
+interface CellProps {
   color: string;
   label: string;
   bgcolor: string;
@@ -9,18 +11,22 @@ export default (props: {
   onClick: (date: Date, index: number) => void;
   dateObj: Date;
   hasNote: boolean;
-}) => {
-  const col = `text-${props.color} bg-${props.bgcolor}`;
+}
+
+const Cell: FC<CellProps> = ({ color, label, bgcolor, index, onClick, dateObj, hasNote }) => {
+  const BadgeContainerClass = classNames("w-[50px] h-10 flex flex-col justify-center items-center border-none select-none cursor-pointer", `text-${color}`, `bg-${bgcolor}`);
 
   return (
     <div
-      className={`w-[50px] h-[40px] flex flex-col justify-center items-center border-none select-none cursor-pointer ${col}`}
-      onClick={() => props.onClick(props.dateObj, props.index)}
+      className={BadgeContainerClass}
+      onClick={() => onClick(dateObj, index)}
     >
       {
-        props.hasNote ? <Badge /> : <></>
+        hasNote && <Badge />
       }
-      {props.label}
+      {label}
     </div>
   );
 };
+
+export default Cell

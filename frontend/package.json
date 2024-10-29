@@ -12,6 +12,7 @@
     "@types/react-calendar": "^4.1.0",
     "@types/react-dom": "^18.0.10",
     "axios": "^1.7.7",
+    "classnames": "^2.5.1",
     "date-holidays": "^3.23.12",
     "postcss": "^8.4.41",
     "react": "^18.2.0",

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Holidays, { HolidaysTypes } from "date-holidays";
 import axios, { AxiosResponse } from 'axios';
 
@@ -6,13 +6,17 @@ import Cell from "./Cell";
 import { MyDate, Note } from "../types/types";
 import { serverURL } from "../config/config";
 
-const days = ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"];
-const fullDayNames = ["Sunday", "Monday", "Tuesday", "Wendesday", "Thursday", "Friday", "Saturday"];
-const monthsNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"];
+const FULLDAYNAMES = ["Sunday", "Monday", "Tuesday", "Wendesday", "Thursday", "Friday", "Saturday"];
+const MONTHSNAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const MILLSPERDAY = 86400000;
 
-function DailyView(props: { currentDate: Date, onSelect: (date: number) => void }) {
-  const [currentDate, setCurrentDate] = useState<Date>(props.currentDate);
+interface DailyViewProps {
+  curDate: Date, onSelect: (date: number) => void
+}
+
+const DailyView: FC<DailyViewProps> = ({ curDate, onSelect }) => {
+  const [currentDate, setCurrentDate] = useState<Date>(curDate);
   const [holidays, setHolidays] = useState<HolidaysTypes.Holiday[]>([]);
   const [dates, setDates] = useState<Array<MyDate>>([]);
   const [notes, setNotes] = useState<Array<Note>>([]);
@@ -29,8 +33,8 @@ function DailyView(props: { currentDate: Date, onSelect: (date: number) => void 
   }, []);
 
   useEffect(() => {
-    setCurrentDate(props.currentDate);
-  }, [props]);
+    setCurrentDate(curDate);
+  }, [curDate]);
 
   useEffect(() => {
     const temp: Array<MyDate> = [];
@@ -91,7 +95,7 @@ function DailyView(props: { currentDate: Date, onSelect: (date: number) => void 
   };
 
   const toMyFormat = (date: Date) => {
-    return `${fullDayNames[date.getDay()]}, ${monthsNames[date.getMonth()]} ${date.getDate()}`;
+    return `${FULLDAYNAMES[date.getDay()]}, ${MONTHSNAMES[date.getMonth()]} ${date.getDate()}`;
   };
 
   const isHoliday = (date: Date) => {
@@ -100,7 +104,7 @@ function DailyView(props: { currentDate: Date, onSelect: (date: number) => void 
     ).length;
   };
 
-  const createNote = (date: Date, index: number) => {
+  const createNote = async (date: Date, index: number) => {
     const ind1 = notes.findIndex((note) => note.date.toString() === date.toString());
     const noteString = window.prompt("Leave your note for this day", ind1 < 0 ? "" : notes[ind1].note);
     const note = noteString === null ? "" : noteString;
@@ -118,10 +122,10 @@ function DailyView(props: { currentDate: Date, onSelect: (date: number) => void 
       else tempNotes[ind].note = note;
     }
 
-    setNotes(tempNotes);
 
     try {
-      axios.post(`${serverURL}/addevent`, { event: tempNotes })
+      await axios.post(`${serverURL}/addevent`, { event: tempNotes })
+      setNotes(tempNotes);
     } catch (err) {
       console.error(err);
     }
@@ -130,10 +134,10 @@ function DailyView(props: { currentDate: Date, onSelect: (date: number) => void 
   return (
     <div className="w-[350px] flex flex-wrap">
       {/* days */}
-      {days.map((val) => {
+      {DAYS.map((val) => {
         return (
           <div
-            className={`w-[50px] h-[40px] flex justify-center items-center border-none select-none cursor-pointer`}
+            className="w-[50px] h-10 flex justify-center items-center border-none select-none cursor-pointer"
             key={val}
           >
             {val}

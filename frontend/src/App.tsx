@@ -3,7 +3,7 @@ import CustomCalendar from './components/CustomCalendar';
 
 function App() {
   return (
-    <div className='w-full h-[100vh] flex justify-center items-center'>
+    <div className='w-full h-screen flex justify-center items-center'>
       <CustomCalendar />
     </div>
   );

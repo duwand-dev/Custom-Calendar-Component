@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
+
 import DailyView from "./DailyView";
-import { ViewTypes } from "../types/types";
 import MonthlyView from "./MonthlyView";
 import YearlyView from "./YearlyView";
+import { ViewTypes } from "../types/types";
 
-const fullDayNames = ["Sunday", "Monday", "Tuesday", "Wendesday", "Thursday", "Friday", "Saturday"];
-const monthsNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const FULLDAYNAMES = ["Sunday", "Monday", "Tuesday", "Wendesday", "Thursday", "Friday", "Saturday"];
+const MONTHSNAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-function App() {
+const CustomCalendar = () => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [viewType, setViewType] = useState<ViewTypes>(ViewTypes.DailyView);
 
   const toMyFormat = (date: Date) => {
-    return `${fullDayNames[date.getDay()]}, ${monthsNames[date.getMonth()]} ${date.getDate()}`;
+    return `${FULLDAYNAMES[date.getDay()]}, ${MONTHSNAMES[date.getMonth()]} ${date.getDate()}`;
   };
 
   const handleSelectDate = (day: number) => {
@@ -49,6 +50,7 @@ function App() {
       case ViewTypes.YearlyView:
         if (date.getFullYear() - 10 > 1969) date.setFullYear(date.getFullYear() - 10);
         break;
+      default:
     }
     setCurrentDate(date);
   }
@@ -67,6 +69,7 @@ function App() {
       case ViewTypes.YearlyView:
         if (date.getFullYear() + 10 < 2050) date.setFullYear(date.getFullYear() + 10);
         break;
+      default:
     }
     setCurrentDate(date);
   }
@@ -76,17 +79,17 @@ function App() {
       {toMyFormat(currentDate)}
       <div className="w-full flex justify-between">
         <div>
-          <button className="w-[40px] h-[40px] hover:bg-slate-200" onClick={() => handlePrevious()}>&lt;</button>
-          <button className="w-[40px] h-[40px] hover:bg-slate-200" onClick={() => handleNext()}>&gt;</button></div>
+          <button className="size-10 hover:bg-slate-200" onClick={() => handlePrevious()}>&lt;</button>
+          <button className="size-10 hover:bg-slate-200" onClick={() => handleNext()}>&gt;</button></div>
         <div className="flex">
-          <div className="h-[40px] hover:bg-slate-200 flex items-center cursor-pointer p-2" onClick={() => setViewType(ViewTypes.MonthlyView)}>Monthly</div>
-          <div className="h-[40px] hover:bg-slate-200 flex items-center cursor-pointer p-2" onClick={() => setViewType(ViewTypes.YearlyView)}>Yearly</div>
+          <div className="h-10 hover:bg-slate-200 flex items-center cursor-pointer p-2" onClick={() => setViewType(ViewTypes.MonthlyView)}>Monthly</div>
+          <div className="h-10 hover:bg-slate-200 flex items-center cursor-pointer p-2" onClick={() => setViewType(ViewTypes.YearlyView)}>Yearly</div>
         </div>
       </div>
       {
-        viewType === ViewTypes.DailyView ? <DailyView currentDate={currentDate} onSelect={handleSelectDate} /> : viewType === ViewTypes.MonthlyView ? <MonthlyView onSelect={handleSelectMonth} /> : <YearlyView currentYear={currentDate.getFullYear()} onSelect={handleSelectYear} />}
+        viewType === ViewTypes.DailyView ? <DailyView curDate={currentDate} onSelect={handleSelectDate} /> : viewType === ViewTypes.MonthlyView ? <MonthlyView onSelect={handleSelectMonth} /> : <YearlyView currentYear={currentDate.getFullYear()} onSelect={handleSelectYear} />}
     </div>
   );
 }
 
-export default App;
+export default CustomCalendar;
